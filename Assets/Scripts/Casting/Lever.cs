@@ -6,7 +6,7 @@ namespace GearsAndDreams.Casting
 {
     public class Lever : MonoBehaviour
     {
-        [SerializeField] private Scrollbar scrollbar;
+        private Scrollbar scrollbar;
         [SerializeField] private Bucket bucketComponent;
         [SerializeField] private Lava lavaComponent;
 
@@ -15,6 +15,8 @@ namespace GearsAndDreams.Casting
 
         private void Awake()
         {
+            scrollbar = GetComponent<Scrollbar>();
+            
             InitializeComponents();
             SetupEventListeners();
         }
