@@ -12,7 +12,8 @@ namespace Assets.Scripts.MaterialSelection
         private CollectedMaterial _collectedMaterial;
         [SerializeField]
         private TMP_Text _remainingCountText;
-        private Dictionary<Material, int> _targetMaterial;
+        private Dictionary<Material, int> _targetMaterialDictionary;
+        private List<Material> _targetMaterialList;
         [SerializeField]
         private Material[] _materialPool;
         [SerializeField]
@@ -30,14 +31,19 @@ namespace Assets.Scripts.MaterialSelection
         [SerializeField]
         private float _timePerSelection;
         [SerializeField]
+        private float _fadeDuration;
+        [SerializeField]
         private MaterialSelectionButton[] _selectionSlots;
         private void Awake()
         {
-            _targetMaterial=new();
+            _targetMaterialDictionary=new();
+            _targetMaterialList=new();
             for(int i=0;i<5;i++)
             {
-                int index=UnityEngine.Random.Range(1, _materialPool.Length);
-                _targetMaterial[_materialPool[index]]=_targetMaterial.GetValueOrDefault(_materialPool[index], 0)+1;
+                int index=UnityEngine.Random.Range(1, _materialPool.Length-1);
+                _targetMaterialList.Add(_materialPool[index]);
+                _targetMaterialDictionary[_materialPool[index]]=_targetMaterialDictionary.GetValueOrDefault(_materialPool[index], 0)+1;
+                print(_materialPool[index].name);
             }
         }
         private void Start()
@@ -46,15 +52,20 @@ namespace Assets.Scripts.MaterialSelection
         }
         public IEnumerator ActivateMaterialSelectionMode()
         {
+            Array.ForEach(_selectionSlots, selectionSlot=>selectionSlot.FadeDuration=_fadeDuration);
+            
             RemainingSelectionCount=_totalSelectionCount;
             while(RemainingSelectionCount>0)
             {
                 RemainingSelectionCount--;
-                Array.ForEach(_selectionSlots, selectionSlot=>
+                int answerIndex=UnityEngine.Random.Range(1, _selectionSlots.Length);
+                for(int i=0;i<_selectionSlots.Length;i++)
                 {
-                    selectionSlot.Material=_materialPool[UnityEngine.Random.Range(1,_materialPool.Length)];
-                    selectionSlot.OnCompleteLightAnimation=_collectedMaterial.CollectMaterial;
-                });
+                    _selectionSlots[i].Material=i!=answerIndex
+                    ?_materialPool[UnityEngine.Random.Range(1,_materialPool.Length)]
+                    :_targetMaterialList[RemainingSelectionCount];
+                    _selectionSlots[i].OnCompleteLightAnimation=_collectedMaterial.CollectMaterial;
+                }
                 float elapsedTime=0f;
                 while(elapsedTime<_timePerSelection)
                 {

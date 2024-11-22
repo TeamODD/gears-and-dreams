@@ -10,8 +10,7 @@ namespace Assets.Scripts.MaterialSelection
     [RequireComponent(typeof(CanvasGroup))]
     public class MaterialSelectionButton : MonoBehaviour
     {
-        [SerializeField]
-        private float _fadeDuration;
+        public float FadeDuration;
         private Image _materialImage;
         private Button _button;
         private CanvasGroup _canvasGroup;
@@ -31,7 +30,7 @@ namespace Assets.Scripts.MaterialSelection
                 _button.interactable=true;
                 _canvasGroup.alpha=1f;
                 _fadeAnimationSequence=DOTween.Sequence(gameObject);
-                _fadeAnimationSequence.Append(_canvasGroup.DOFade(0f, _fadeDuration));
+                _fadeAnimationSequence.Append(_canvasGroup.DOFade(0f, FadeDuration));
                 _fadeAnimationSequence.OnComplete(()=>
                 {
                     _canvasGroup.alpha=0f;

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad8832e14a2694014a87e174dd4a15f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeDuration: 1
+  _fadeDuration: 2
   _materialLightPrafab: {fileID: 2341039711624599374, guid: cfe05a82af0e141eeb36b85bf17ef85e, type: 3}
 --- !u!114 &8775513509351793546
 MonoBehaviour:
