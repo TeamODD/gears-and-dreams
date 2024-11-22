@@ -7,12 +7,13 @@ namespace GearsAndDreams.Casting.Enums
         Evaluating,
         Finished
     }
-    
+
     public enum AccuracyLevel
     {
-        Perfect,
-        Good,
-        Poor,
-        Miss
+        Perfect,    // ±10% 이하
+        Good,       // ±10% ~ ±20%
+        Fair,       // ±20% ~ ±30%
+        Poor,       // ±30% ~ ±40%
+        Miss        // ±40% 초과
     }
 }

@@ -76,27 +76,41 @@ namespace GearsAndDreams.Casting
             Debug.Log($"Lava Height: {currentHeight}");
             Debug.Log($"Target Height: {TargetHeight}");
 
+            // 목표 높이와의 차이를 백분율로 계산
             float difference = Mathf.Abs(currentHeight - TargetHeight);
-            AccuracyLevel accuracy;
-            int score;
+            float percentageDiff = difference / TargetHeight;
 
-            if (difference <= settings.PerfectThreshold)
+            AccuracyLevel accuracy;
+            int score = settings.BaseScore;
+
+            if (percentageDiff <= settings.ThresholdTen)
             {
                 accuracy = AccuracyLevel.Perfect;
-                score = settings.PerfectScore;
+                // 10% 이하는 감점 없음
             }
-            else if (difference <= settings.GoodThreshold)
+            else if (percentageDiff <= settings.ThresholdTwenty)
             {
                 accuracy = AccuracyLevel.Good;
-                score = settings.GoodScore;
+                score -= settings.PenaltyTwenty;
+            }
+            else if (percentageDiff <= settings.ThresholdThirty)
+            {
+                accuracy = AccuracyLevel.Fair;
+                score -= settings.PenaltyThirty;
+            }
+            else if (percentageDiff <= settings.ThresholdForty)
+            {
+                accuracy = AccuracyLevel.Poor;
+                score -= settings.PenaltyForty;
             }
             else
             {
-                accuracy = AccuracyLevel.Poor;
-                score = settings.PoorScore;
+                accuracy = AccuracyLevel.Miss;
+                score -= settings.PenaltyOver;
             }
 
-            Debug.Log(difference);
+            Debug.Log($"Difference: {percentageDiff * 100:F1}%");
+            Debug.Log($"Score: {score}");
 
             OnScoreCalculated?.Invoke(accuracy, score);
 

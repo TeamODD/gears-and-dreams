@@ -26,9 +26,23 @@ namespace GearsAndDreams.Casting
 
         private void HandleScoreCalculated(AccuracyLevel accuracy, int score)
         {
-            accuracyText.text = accuracy.ToString();
-            scoreText.text = score.ToString();
+            string accuracyMessage = GetAccuracyMessage(accuracy);
+            accuracyText.text = accuracyMessage;
+            scoreText.text = $"Score: {score}";
             ShowResult();
+        }
+
+        private string GetAccuracyMessage(AccuracyLevel accuracy)
+        {
+            return accuracy switch
+            {
+                AccuracyLevel.Perfect => "Perfect!\n±10%",
+                AccuracyLevel.Good => "Good\n±20%",
+                AccuracyLevel.Fair => "Fair\n±30%",
+                AccuracyLevel.Poor => "Poor\n±40%",
+                AccuracyLevel.Miss => "Miss\n±40% over",
+                _ => accuracy.ToString()
+            };
         }
 
         private void HandleGameStateChanged(GameState newState)
@@ -41,7 +55,7 @@ namespace GearsAndDreams.Casting
 
         private void ShowResult()
         {
-            // resultPanel.SetActive(true);
+            resultPanel.SetActive(true);
         }
 
         private void HideResult()
