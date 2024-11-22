@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collectedMaterialPanel: {fileID: 427374909}
-  _collectedMaterialIconPrefab: {fileID: 0}
+  _collectedMaterialIconPrefab: {fileID: 7023263390103846614, guid: aae2f066296334e6a9807955d24df91b, type: 3}
 --- !u!1 &901575192
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 901575195}
   - component: {fileID: 901575194}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Material Count Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1072,7 +1072,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936ff5de5811744c5b830330394033aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collectedMaterial: {fileID: 0}
+  _collectedMaterial: {fileID: 427374911}
+  _remainingCountText: {fileID: 901575194}
   _materialPool:
   - {fileID: 11400000, guid: 0bbe9be7d4b2a4b61941d8b0b8678c9e, type: 2}
   - {fileID: 11400000, guid: 3aaf23f63023c44278d5dce0b8370e4d, type: 2}

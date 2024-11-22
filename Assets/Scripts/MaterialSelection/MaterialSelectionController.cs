@@ -3,18 +3,30 @@ namespace Assets.Scripts.MaterialSelection
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using TMPro;
     using UnityEngine;
-    
+
     public class MaterialSelectionController : MonoBehaviour
     {
         [SerializeField]
         private CollectedMaterial _collectedMaterial;
+        [SerializeField]
+        private TMP_Text _remainingCountText;
         private Dictionary<Material, int> _targetMaterial;
         [SerializeField]
         private Material[] _materialPool;
         [SerializeField]
         private int _totalSelectionCount;
         private int _remainingSelectionCount;
+        public int RemainingSelectionCount
+        {
+            get=>_remainingSelectionCount;
+            set
+            {
+                _remainingSelectionCount=value;
+                _remainingCountText.text=value.ToString();
+            }
+        }
         [SerializeField]
         private float _timePerSelection;
         [SerializeField]
@@ -34,9 +46,10 @@ namespace Assets.Scripts.MaterialSelection
         }
         public IEnumerator ActivateMaterialSelectionMode()
         {
-            _remainingSelectionCount=_totalSelectionCount;
-            while(_remainingSelectionCount>0)
+            RemainingSelectionCount=_totalSelectionCount;
+            while(RemainingSelectionCount>0)
             {
+                RemainingSelectionCount--;
                 Array.ForEach(_selectionSlots, selectionSlot=>
                 {
                     selectionSlot.Material=_materialPool[UnityEngine.Random.Range(1,_materialPool.Length)];
@@ -48,7 +61,6 @@ namespace Assets.Scripts.MaterialSelection
                     yield return null;
                     elapsedTime+=Time.deltaTime;
                 }
-                _remainingSelectionCount--;
             }
         }
     }
