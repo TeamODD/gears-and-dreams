@@ -16,6 +16,10 @@ namespace Assets.Scripts.MaterialSelection
         private Button _button;
         private CanvasGroup _canvasGroup;
         private Sequence _fadeAnimationSequence;
+        [SerializeField]
+        private GameObject _materialLightPrafab;
+        private Vector3 _endPosition; 
+        private Sequence _moveLightAnimationSequence;
         private Material _material;
         public Material Material
         {
@@ -42,10 +46,23 @@ namespace Assets.Scripts.MaterialSelection
             _button=GetComponent<Button>();
             _button.onClick.AddListener(OnClickButton);
         }
+        private void Start()
+        {
+            _endPosition=GameObject.Find("End Position").GetComponent<RectTransform>().position;
+        }
         private void OnClickButton()
         {
             _fadeAnimationSequence.Complete();
-            OnCompleteLightAnimation.Invoke(Material);
+            GameObject lightObject=Instantiate(_materialLightPrafab, transform.root);
+            lightObject.GetComponent<RectTransform>().anchoredPosition=Camera.main.WorldToScreenPoint(GetComponent<RectTransform>().position);
+            Material currentMaterial=Material;
+            _moveLightAnimationSequence=DOTween.Sequence(lightObject);
+            _moveLightAnimationSequence.Append(lightObject.transform.DOMove(_endPosition, 2f)).SetEase(Ease.InCubic);
+            _moveLightAnimationSequence.OnComplete(()=>
+            {
+                OnCompleteLightAnimation.Invoke(currentMaterial);
+                Destroy(lightObject);
+            });
         }
         public UnityAction<Material> OnCompleteLightAnimation;
     }
