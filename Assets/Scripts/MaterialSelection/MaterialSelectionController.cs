@@ -3,8 +3,10 @@ namespace Assets.Scripts.MaterialSelection
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using DG.Tweening;
     using TMPro;
     using UnityEngine;
+    using UnityEngine.UI;
 
     public class MaterialSelectionController : MonoBehaviour
     {
@@ -52,7 +54,11 @@ namespace Assets.Scripts.MaterialSelection
         }
         public IEnumerator ActivateMaterialSelectionMode()
         {
-            Array.ForEach(_selectionSlots, selectionSlot=>selectionSlot.FadeDuration=_fadeDuration);
+            Array.ForEach(_selectionSlots, selectionSlot=>
+            {
+                selectionSlot.FadeDuration=_fadeDuration;
+                selectionSlot.GetComponent<Button>().onClick.AddListener(CompleteButtonSequence);
+            });
             
             RemainingSelectionCount=_totalSelectionCount;
             while(RemainingSelectionCount>0)
@@ -73,6 +79,10 @@ namespace Assets.Scripts.MaterialSelection
                     elapsedTime+=Time.deltaTime;
                 }
             }
+        }
+        private void CompleteButtonSequence()
+        {
+            Array.ForEach(_selectionSlots, selectionSlot=>selectionSlot.GetComponent<Button>().interactable=false);
         }
     }
 }
