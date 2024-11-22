@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fadeDuration: 1
+  _materialLightPrafab: {fileID: 2341039711624599374, guid: cfe05a82af0e141eeb36b85bf17ef85e, type: 3}
 --- !u!114 &8775513509351793546
 MonoBehaviour:
   m_ObjectHideFlags: 0
