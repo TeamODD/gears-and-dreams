@@ -67,9 +67,19 @@ namespace Assets.Scripts.MaterialSelection
                 int answerIndex=UnityEngine.Random.Range(1, _selectionSlots.Length);
                 for(int i=0;i<_selectionSlots.Length;i++)
                 {
-                    _selectionSlots[i].Material=i!=answerIndex
-                    ?_materialPool[UnityEngine.Random.Range(1,_materialPool.Length)]
-                    :_targetMaterialList[RemainingSelectionCount];
+                    if(answerIndex==i)
+                    {
+                        _selectionSlots[i].Material=_targetMaterialList[RemainingSelectionCount];
+                    }
+                    else
+                    {
+                        int index=UnityEngine.Random.Range(1,_materialPool.Length);
+                        while(_materialPool[index]==_targetMaterialList[RemainingSelectionCount])
+                        {
+                            index=UnityEngine.Random.Range(1,_materialPool.Length);
+                        }
+                        _selectionSlots[i].Material=_materialPool[index];
+                    }
                     _selectionSlots[i].OnCompleteLightAnimation=_collectedMaterial.CollectMaterial;
                 }
                 float elapsedTime=0f;
