@@ -4,6 +4,7 @@ using GearsAndDreams.Casting.Configuration;
 using GearsAndDreams.Casting.Enums;
 using GearsAndDreams.Casting.Interfaces;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GearsAndDreams.Casting
 {
@@ -11,7 +12,10 @@ namespace GearsAndDreams.Casting
     {
         [SerializeField] private CastingGameSettings settings;
         [SerializeField] private TargetLine targetLine;
+        [SerializeField] private Scrollbar scrollbar;
 
+        private float _previousScrollValue;
+        private bool _isEvaluated;
         public GameState CurrentState { get; private set; }
         public float TargetHeight { get; private set; }
         public event Action<GameState> OnGameStateChanged;
@@ -23,12 +27,33 @@ namespace GearsAndDreams.Casting
             targetLine.SetActive(false);
         }
 
+        private void Update()
+        {
+            if (CurrentState != GameState.Playing || _isEvaluated) return;
+
+            float currentScrollValue = scrollbar.value;
+            if (currentScrollValue < _previousScrollValue)
+            {
+                _isEvaluated = true;
+                StartCoroutine(EvaluateWithDelay());
+            }
+            _previousScrollValue = currentScrollValue;
+        }
+
+        private IEnumerator EvaluateWithDelay()
+        {
+            yield return new WaitForSeconds(2f);  // 2초 딜레이
+            EvaluateAccuracy(FindObjectOfType<Lava>().transform.localScale.y);
+        }
+
         public void StartGame()
         {
             if (CurrentState != GameState.Ready) return;
 
             GenerateNewTarget();
 
+            _isEvaluated = false;
+            _previousScrollValue = scrollbar.value;
             CurrentState = GameState.Playing;
             OnGameStateChanged?.Invoke(CurrentState);
         }

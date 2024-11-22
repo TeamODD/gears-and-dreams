@@ -41,7 +41,7 @@ namespace GearsAndDreams.Casting
             if (_bucketController.IsTilted && castingGameManager.CurrentState == GameState.Playing)
             {
                 UpdateLavaScale(_bucketController.BucketLocalRotationAngle);
-                CheckForEvaluation();
+                // CheckForEvaluation();
             }
         }
 
@@ -61,14 +61,15 @@ namespace GearsAndDreams.Casting
             _isEvaluated = false;
         }
 
-        private void CheckForEvaluation()
-        {
-            if (!_isEvaluated && transform.localScale.y >= settings.MaxScale)
-            {
-                _isEvaluated = true;
-                castingGameManager.EvaluateAccuracy(transform.localScale.y);
-            }
-        }
+        // private void CheckForEvaluation()
+        // {
+        //     if (!_isEvaluated &&
+        //         transform.localScale.y >= settings.MaxScale) // && transform.localScale.y >= settings.MaxScale
+        //     {
+        //         _isEvaluated = true;
+        //         castingGameManager.EvaluateAccuracy(transform.localScale.y);
+        //     }
+        // }
 
         public void UpdateLavaScale(float bucketAngle)
         {
