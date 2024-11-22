@@ -3,14 +3,16 @@ namespace Assets.Scripts.MaterialSelection
     using DG.Tweening;
     using UnityEngine;
     using UnityEngine.Events;
+    using UnityEngine.UI;
 
+    [RequireComponent(typeof(Image))]
+    [RequireComponent(typeof(Button))]
     [RequireComponent(typeof(CanvasGroup))]
     public class MaterialSelectionButton : MonoBehaviour
     {
         [SerializeField]
         private float _fadeDuration;
-        [SerializeField]
-        private Sprite _sprite;
+        private Image _materialImage;
         private CanvasGroup _canvasGroup;
         private Sequence _fadeAnimationSequence;
         private Material _material;
@@ -20,13 +22,14 @@ namespace Assets.Scripts.MaterialSelection
             set
             {
                 _material=value;
-                _sprite=value.Sprite;
+                _materialImage.sprite=value.Sprite;
                 _fadeAnimationSequence.Restart();
             }
         }
         private void Start()
         {
             _canvasGroup=GetComponent<CanvasGroup>();
+            _materialImage=GetComponent<Image>();
 
             gameObject.SetActive(false);
 
