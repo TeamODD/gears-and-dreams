@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinTargetHeight: -2
   MaxTargetHeight: 0.5
-  PerfectThreshold: 0.5
-  GoodThreshold: 2
+  PerfectThreshold: 0.3
+  GoodThreshold: 1
   PerfectScore: 100
   GoodScore: 50
   PoorScore: 20
