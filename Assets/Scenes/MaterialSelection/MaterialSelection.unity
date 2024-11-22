@@ -1119,6 +1119,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdf5ee5337ff64af9914fffe47ab7094, type: 2}
   _totalSelectionCount: 5
   _timePerSelection: 2
+  _fadeDuration: 2
   _selectionSlots:
   - {fileID: 2097290422230394460}
   - {fileID: 60551561}
