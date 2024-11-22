@@ -41,7 +41,7 @@ namespace GearsAndDreams.Casting
 
         private void ShowResult()
         {
-            resultPanel.SetActive(true);
+            // resultPanel.SetActive(true);
         }
 
         private void HideResult()

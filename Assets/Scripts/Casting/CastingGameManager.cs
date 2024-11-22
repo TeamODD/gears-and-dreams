@@ -13,6 +13,7 @@ namespace GearsAndDreams.Casting
         [SerializeField] private CastingGameSettings settings;
         [SerializeField] private TargetLine targetLine;
         [SerializeField] private Scrollbar scrollbar;
+        [SerializeField] private Transform lavaTopPoint;
 
         private float _previousScrollValue;
         private bool _isEvaluated;
@@ -43,7 +44,7 @@ namespace GearsAndDreams.Casting
         private IEnumerator EvaluateWithDelay()
         {
             yield return new WaitForSeconds(2f);  // 2초 딜레이
-            EvaluateAccuracy(FindObjectOfType<Lava>().transform.localScale.y);
+            EvaluateAccuracy(lavaTopPoint.position.y);
         }
 
         public void StartGame()
@@ -72,6 +73,9 @@ namespace GearsAndDreams.Casting
             CurrentState = GameState.Evaluating;
             OnGameStateChanged?.Invoke(CurrentState);
 
+            Debug.Log($"Lava Height: {currentHeight}");
+            Debug.Log($"Target Height: {TargetHeight}");
+
             float difference = Mathf.Abs(currentHeight - TargetHeight);
             AccuracyLevel accuracy;
             int score;
@@ -89,8 +93,10 @@ namespace GearsAndDreams.Casting
             else
             {
                 accuracy = AccuracyLevel.Poor;
-                score = settings.GoodScore;
+                score = settings.PoorScore;
             }
+
+            Debug.Log(difference);
 
             OnScoreCalculated?.Invoke(accuracy, score);
 

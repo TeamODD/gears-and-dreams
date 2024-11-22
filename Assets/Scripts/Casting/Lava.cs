@@ -12,8 +12,8 @@ namespace GearsAndDreams.Casting
         [SerializeField] private CastingGameManager castingGameManager;
 
         private IBucketController _bucketController;
-        private float _baseRotation;
-        private bool _isEvaluated;
+        // private float _baseRotation;
+        // private bool _isEvaluated;
 
         public void Initialize(IBucketController bucketController)
         {
@@ -55,10 +55,10 @@ namespace GearsAndDreams.Casting
 
         private void ResetLava()
         {
-            Vector3 scale = transform.localScale;
-            scale.y = 0;
-            transform.localScale = scale;
-            _isEvaluated = false;
+            // 초기 위치로 리셋
+            Vector3 position = transform.localPosition;
+            position.y = -4.5f;
+            transform.localPosition = position;
         }
 
         // private void CheckForEvaluation()
@@ -78,11 +78,25 @@ namespace GearsAndDreams.Casting
 
             if (rotationDelta > 0.01f)
             {
-                Vector3 targetScale = transform.localScale;
-                targetScale.y += rotationDelta * settings.ScaleMultiplier * Time.deltaTime;
-                targetScale.y = Mathf.Clamp(targetScale.y, 0, settings.MaxScale);
-                transform.localScale = targetScale;
+                Vector3 position = transform.localPosition;
+                position.y += rotationDelta * settings.HeightMultiplier * Time.deltaTime;
+                position.y = Mathf.Clamp(position.y, -7f, settings.MaxHeight);
+                transform.localPosition = position;
             }
         }
+
+        // public void UpdateLavaScale(float bucketAngle)
+        // {
+        //     float rotationDelta = Mathf.Abs(bucketAngle - _bucketController.BaseRotationAngle);
+        //     rotationDelta = rotationDelta > 180 ? 360 - rotationDelta : rotationDelta;
+
+        //     if (rotationDelta > 0.01f)
+        //     {
+        //         Vector3 targetScale = transform.localScale;
+        //         targetScale.y += rotationDelta * settings.ScaleMultiplier * Time.deltaTime;
+        //         targetScale.y = Mathf.Clamp(targetScale.y, 0, settings.MaxScale);
+        //         transform.localScale = targetScale;
+        //     }
+        // }
     }
 }

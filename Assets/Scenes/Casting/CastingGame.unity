@@ -474,7 +474,7 @@ Transform:
   m_GameObject: {fileID: 399192490}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.488, z: 0}
+  m_LocalPosition: {x: 0, y: 0.4959, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -920,8 +920,8 @@ Transform:
   m_GameObject: {fileID: 894966154}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.79, y: -1.9, z: 0.02982696}
-  m_LocalScale: {x: 11.791691, y: 1, z: 1}
+  m_LocalPosition: {x: -8.79, y: -6.8975, z: 0.02982696}
+  m_LocalScale: {x: 11.5, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 106694321}
@@ -1634,6 +1634,7 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: 58ee2a30cd523784e920b2037fbb99f7, type: 2}
   targetLine: {fileID: 1521955302}
   scrollbar: {fileID: 1868282395}
+  lavaTopPoint: {fileID: 399192491}
 --- !u!4 &1751714720
 Transform:
   m_ObjectHideFlags: 0
