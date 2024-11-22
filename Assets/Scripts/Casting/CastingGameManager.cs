@@ -73,12 +73,9 @@ namespace GearsAndDreams.Casting
             CurrentState = GameState.Evaluating;
             OnGameStateChanged?.Invoke(CurrentState);
 
-            Debug.Log($"Lava Height: {currentHeight}");
-            Debug.Log($"Target Height: {TargetHeight}");
-
             // 목표 높이와의 차이를 백분율로 계산
             float difference = Mathf.Abs(currentHeight - TargetHeight);
-            float percentageDiff = difference / TargetHeight;
+            float percentageDiff = difference / Mathf.Abs(TargetHeight - (-3f)); //-3 << 바닥 y좌표
 
             AccuracyLevel accuracy;
             int score = settings.BaseScore;
@@ -109,7 +106,9 @@ namespace GearsAndDreams.Casting
                 score -= settings.PenaltyOver;
             }
 
-            Debug.Log($"Difference: {percentageDiff * 100:F1}%");
+            Debug.Log($"Target Height: {TargetHeight:F2}");
+            Debug.Log($"Current Height: {currentHeight:F2}");
+            Debug.Log($"Difference: {difference:F2} ({percentageDiff * 100:F1}%)");
             Debug.Log($"Score: {score}");
 
             OnScoreCalculated?.Invoke(accuracy, score);
