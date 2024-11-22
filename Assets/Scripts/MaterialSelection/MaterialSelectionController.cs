@@ -3,6 +3,7 @@ namespace Assets.Scripts.MaterialSelection
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using DG.Tweening;
     using TMPro;
     using UnityEngine;
@@ -15,7 +16,7 @@ namespace Assets.Scripts.MaterialSelection
         [SerializeField]
         private TMP_Text _remainingCountText;
         private Dictionary<Material, int> _targetMaterialDictionary;
-        private List<Material> _targetMaterialList;
+        private Dictionary<Material, int> _remainingMaterialDictionary;
         [SerializeField]
         private Material[] _materialPool;
         [SerializeField]
@@ -39,12 +40,12 @@ namespace Assets.Scripts.MaterialSelection
         private void Awake()
         {
             _targetMaterialDictionary=new();
-            _targetMaterialList=new();
+            _remainingMaterialDictionary=new();
             for(int i=0;i<5;i++)
             {
                 int index=UnityEngine.Random.Range(1, _materialPool.Length-1);
-                _targetMaterialList.Add(_materialPool[index]);
                 _targetMaterialDictionary[_materialPool[index]]=_targetMaterialDictionary.GetValueOrDefault(_materialPool[index], 0)+1;
+                _remainingMaterialDictionary[_materialPool[index]]=_remainingMaterialDictionary.GetValueOrDefault(_materialPool[index], 0)+1;
                 print(_materialPool[index].name);
             }
         }
@@ -58,30 +59,33 @@ namespace Assets.Scripts.MaterialSelection
             {
                 selectionSlot.FadeDuration=_fadeDuration;
                 selectionSlot.GetComponent<Button>().onClick.AddListener(CompleteButtonSequence);
+                selectionSlot.OnCompleteLightAnimation=_collectedMaterial.CollectMaterial;
+                selectionSlot.OnClickMaterial=RemoveRemainingMaterial;
             });
             
             RemainingSelectionCount=_totalSelectionCount;
             while(RemainingSelectionCount>0)
             {
                 RemainingSelectionCount--;
-                int answerIndex=UnityEngine.Random.Range(1, _selectionSlots.Length);
+
+                foreach(Material material in _remainingMaterialDictionary.Keys)
+                {
+                    print(material.name+": "+_remainingMaterialDictionary[material]);
+                }
+                Material answerMaterial=_remainingMaterialDictionary.Keys.ElementAt(UnityEngine.Random.Range(0, _remainingMaterialDictionary.Count));
+                int answerIndex=UnityEngine.Random.Range(0, _selectionSlots.Length);
                 for(int i=0;i<_selectionSlots.Length;i++)
                 {
                     if(answerIndex==i)
                     {
-                        _selectionSlots[i].Material=_targetMaterialList[RemainingSelectionCount];
+                        _selectionSlots[i].Material=answerMaterial;
                     }
                     else
                     {
-                        int index=UnityEngine.Random.Range(1,_materialPool.Length);
-                        while(_materialPool[index]==_targetMaterialList[RemainingSelectionCount])
-                        {
-                            index=UnityEngine.Random.Range(1,_materialPool.Length);
-                        }
-                        _selectionSlots[i].Material=_materialPool[index];
+                        _selectionSlots[i].Material=_materialPool[UnityEngine.Random.Range(1,_materialPool.Length)];
                     }
-                    _selectionSlots[i].OnCompleteLightAnimation=_collectedMaterial.CollectMaterial;
                 }
+
                 float elapsedTime=0f;
                 while(elapsedTime<_timePerSelection)
                 {
@@ -93,6 +97,17 @@ namespace Assets.Scripts.MaterialSelection
         private void CompleteButtonSequence()
         {
             Array.ForEach(_selectionSlots, selectionSlot=>selectionSlot.GetComponent<Button>().interactable=false);
+        }
+        private void RemoveRemainingMaterial(Material material)
+        {
+            if(_remainingMaterialDictionary.TryGetValue(material, out int count))
+            {
+                _remainingMaterialDictionary[material]--;
+                if(_remainingMaterialDictionary[material]<=0)
+                {
+                    _remainingMaterialDictionary.Remove(material);
+                }
+            }
         }
     }
 }

@@ -53,6 +53,7 @@ namespace Assets.Scripts.MaterialSelection
         private void OnClickButton()
         {
             FadeAnimationSequence.Complete();
+            OnClickMaterial.Invoke(Material);
             GameObject lightObject=Instantiate(_materialLightPrafab, transform.root);
             lightObject.GetComponent<RectTransform>().anchoredPosition=Camera.main.WorldToScreenPoint(GetComponent<RectTransform>().position);
             Material currentMaterial=Material;
@@ -65,5 +66,6 @@ namespace Assets.Scripts.MaterialSelection
             });
         }
         public UnityAction<Material> OnCompleteLightAnimation;
+        public UnityAction<Material> OnClickMaterial;
     }
 }
