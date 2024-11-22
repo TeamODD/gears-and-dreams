@@ -10,11 +10,12 @@ namespace Assets.Scripts.MaterialSelection
     [RequireComponent(typeof(CanvasGroup))]
     public class MaterialSelectionButton : MonoBehaviour
     {
+        [HideInInspector]
         public float FadeDuration;
         private Image _materialImage;
         private Button _button;
         private CanvasGroup _canvasGroup;
-        private Sequence _fadeAnimationSequence;
+        public Sequence FadeAnimationSequence;
         [SerializeField]
         private GameObject _materialLightPrafab;
         private Vector3 _endPosition; 
@@ -29,9 +30,9 @@ namespace Assets.Scripts.MaterialSelection
                 _materialImage.sprite=value.Sprite;
                 _button.interactable=true;
                 _canvasGroup.alpha=1f;
-                _fadeAnimationSequence=DOTween.Sequence(gameObject);
-                _fadeAnimationSequence.Append(_canvasGroup.DOFade(0f, FadeDuration));
-                _fadeAnimationSequence.OnComplete(()=>
+                FadeAnimationSequence=DOTween.Sequence(gameObject);
+                FadeAnimationSequence.Append(_canvasGroup.DOFade(0f, FadeDuration));
+                FadeAnimationSequence.OnComplete(()=>
                 {
                     _canvasGroup.alpha=0f;
                     _button.interactable=false;
@@ -51,7 +52,8 @@ namespace Assets.Scripts.MaterialSelection
         }
         private void OnClickButton()
         {
-            _fadeAnimationSequence.Complete();
+            FadeAnimationSequence.Complete();
+            OnClickMaterial.Invoke(Material);
             GameObject lightObject=Instantiate(_materialLightPrafab, transform.root);
             lightObject.GetComponent<RectTransform>().anchoredPosition=Camera.main.WorldToScreenPoint(GetComponent<RectTransform>().position);
             Material currentMaterial=Material;
@@ -64,5 +66,6 @@ namespace Assets.Scripts.MaterialSelection
             });
         }
         public UnityAction<Material> OnCompleteLightAnimation;
+        public UnityAction<Material> OnClickMaterial;
     }
 }
