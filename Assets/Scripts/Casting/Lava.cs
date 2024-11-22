@@ -1,42 +1,46 @@
+using GearsAndDreams.Casting.Configuration;
+using GearsAndDreams.Casting.Interfaces;
 using UnityEngine;
 
 namespace GearsAndDreams.Casting
 {
-    public class Lava : MonoBehaviour
+    public class Lava : MonoBehaviour, ILavaController
     {
-        [SerializeField] private float scaleMultiplier = 0.1f; // 증가 속도 계수
-        [SerializeField] private float maxScale = 2f;          // 최대 스케일 제한
-        private const float BucketBaseRotation = 30f;          // Bucket 기본 회전값
+        [SerializeField] private LavaSettings settings;
+        
+        private IBucketController _bucketController;
+        private float _baseRotation;
 
-        private Transform _bucketTransform;
-
-        public void Initialize(Transform bucketTransform)
+        public void Initialize(IBucketController bucketController)
         {
-            _bucketTransform = bucketTransform;
+            _bucketController = bucketController;
+            if (settings == null)
+            {
+                Debug.LogError("Lava Setting이 없음");
+            }
         }
 
         private void Update()
         {
-            if (_bucketTransform != null)
+            if (_bucketController == null || settings == null) return;
+
+            if (_bucketController.IsTilted)
             {
-                float bucketRotationZ = _bucketTransform.localEulerAngles.z;
+                UpdateLavaScale(_bucketController.BucketLocalRotationAngle);
+            }
+        }
 
-                // 기본값(30)을 기준으로 회전 차이 계산
-                bucketRotationZ = Mathf.Abs(bucketRotationZ - BucketBaseRotation);
-
-                // 180도를 초과할 경우 올바른 범위로 변환
-                bucketRotationZ = bucketRotationZ > 180 ? 360 - bucketRotationZ : bucketRotationZ;
-
-                if (bucketRotationZ > 0.01f) // 기울어진 상태에서만 증가
-                {
-                    Vector3 targetScale = transform.localScale;
-                    targetScale.y += bucketRotationZ * scaleMultiplier * Time.deltaTime;
-
-                    // 최대 스케일 제한
-                    targetScale.y = Mathf.Clamp(targetScale.y, 0, maxScale);
-
-                    transform.localScale = targetScale;
-                }
+        public void UpdateLavaScale(float bucketAngle)
+        {
+            float rotationDelta = Mathf.Abs(bucketAngle - _bucketController.BaseRotationAngle);
+            rotationDelta = rotationDelta > 180 ? 360 - rotationDelta : rotationDelta;
+            
+            if (rotationDelta > 0.01f)
+            {
+                Vector3 targetScale = transform.localScale;
+                targetScale.y += rotationDelta * settings.ScaleMultiplier * Time.deltaTime;
+                targetScale.y = Mathf.Clamp(targetScale.y, 0, settings.MaxScale);
+                transform.localScale = targetScale;
             }
         }
     }

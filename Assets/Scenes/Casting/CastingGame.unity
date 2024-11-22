@@ -612,8 +612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b9ab569851444fa396c89213c4a20e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleMultiplier: 0.01
-  maxScale: 10
+  settings: {fileID: 11400000, guid: 3c069350531526b41a3f06bf05bb1f22, type: 2}
 --- !u!1 &1163076021
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,8 +951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd3e1ae83a06994ea176da22f739076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRotationAngle: 90
-  easeType: 1
+  settings: {fileID: 11400000, guid: df6bd8b06abfb8a4c880d76c86b31103, type: 2}
 --- !u!212 &1632287656
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1239,8 +1237,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollbar: {fileID: 1868282395}
-  bucket: {fileID: 1632287655}
-  lava: {fileID: 894966157}
+  bucketComponent: {fileID: 1632287655}
+  lavaComponent: {fileID: 894966157}
 --- !u!1 &1969619381
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,32 +1,59 @@
 using System;
 using DG.Tweening;
+using GearsAndDreams.Casting.Configuration;
+using GearsAndDreams.Casting.Interfaces;
 using UnityEngine;
 
 namespace GearsAndDreams.Casting
 {
-    public class Bucket : MonoBehaviour
+    public class Bucket : MonoBehaviour, IBucketController
     {
-        public float maxRotationAngle = 90f;
-        [SerializeField] private Ease easeType = Ease.Linear;
+        [SerializeField] private BucketSettings settings;
+
+        public float BaseRotationAngle => settings.BaseRotationAngle;
+
+        public float BucketLocalRotationAngle
+        {
+            get => transform.localRotation.eulerAngles.z;
+        }
 
         public event Action<float> OnBucketTilted;
 
         public float BucketAngle { get; private set; }
-        
-
         public bool IsTilted => BucketAngle > 0.01f;
+
+        private void Awake()
+        {
+            if (settings == null)
+            {
+                Debug.LogError("Bucket Settings이 없음");
+            }
+        }
 
         public void UpdateTilt(float value)
         {
-            float newAngle = Mathf.Lerp(30, 30 + maxRotationAngle, value);
+            if (settings == null) return;
 
-            // 변경이 있는 경우에만 애니메이션 호출
+            float newAngle = Mathf.Lerp(
+                settings.BaseRotationAngle, 
+                settings.BaseRotationAngle + settings.MaxRotationAngle, 
+                value
+            );
+
             if (Math.Abs(BucketAngle - newAngle) > 0.01f)
             {
                 BucketAngle = newAngle;
-                transform.DORotate(new Vector3(0f, 0f, BucketAngle), 3f).SetEase(easeType);
+                AnimateBucketRotation();
                 OnBucketTilted?.Invoke(BucketAngle);
             }
+        }
+
+        private void AnimateBucketRotation()
+        {
+            transform.DORotate(
+                new Vector3(0f, 0f, BucketAngle),
+                settings.AnimationDuration
+            ).SetEase(settings.EaseType);
         }
     }
 }
