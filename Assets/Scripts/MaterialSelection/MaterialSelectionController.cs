@@ -37,6 +37,7 @@ namespace Assets.Scripts.MaterialSelection
         private float _fadeDuration;
         [SerializeField]
         private MaterialSelectionButton[] _selectionSlots;
+        private int _score=1000;
         private void Awake()
         {
             _targetMaterialDictionary=new();
@@ -93,6 +94,13 @@ namespace Assets.Scripts.MaterialSelection
                     elapsedTime+=Time.deltaTime;
                 }
             }
+
+            foreach(Material material in _targetMaterialDictionary.Keys)
+            {
+                int count=_collectedMaterial.CollectedMaterialCount.GetValueOrDefault(material, 0);
+                _score-=Mathf.Abs(_targetMaterialDictionary[material]-count)*200;
+            }
+            print(_score);
         }
         private void CompleteButtonSequence()
         {

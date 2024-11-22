@@ -10,14 +10,14 @@ namespace Assets.Scripts.MaterialSelection
         private Transform _collectedMaterialPanel;
         [SerializeField]
         private GameObject _collectedMaterialIconPrefab;
-        public Dictionary<Material, int> _collectedMaterialCount;
+        public Dictionary<Material, int> CollectedMaterialCount;
         private void Awake()
         {
-            _collectedMaterialCount=new();    
+            CollectedMaterialCount=new();    
         }
         public void CollectMaterial(Material material)
         {
-            _collectedMaterialCount[material]=_collectedMaterialCount.GetValueOrDefault(material, 0)+1;
+            CollectedMaterialCount[material]=CollectedMaterialCount.GetValueOrDefault(material, 0)+1;
             GameObject collectedMaterialIcon=Instantiate(_collectedMaterialIconPrefab, _collectedMaterialPanel);
             collectedMaterialIcon.GetComponent<Image>().sprite=material.Sprite;
         }
