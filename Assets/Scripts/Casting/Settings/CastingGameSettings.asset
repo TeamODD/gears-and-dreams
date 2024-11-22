@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618873a07ae40e14fb91d23034aa87ae, type: 3}
   m_Name: CastingGameSettings
   m_EditorClassIdentifier: 
-  MinTargetHeight: -2
+  MinTargetHeight: 0.5
   MaxTargetHeight: 0.5
-  PerfectThreshold: 0.3
-  GoodThreshold: 1
-  PerfectScore: 100
-  GoodScore: 50
-  PoorScore: 20
+  ThresholdTen: 0.1
+  ThresholdTwenty: 0.2
+  ThresholdThirty: 0.3
+  ThresholdForty: 0.4
+  BaseScore: 1000
+  PenaltyTwenty: 250
+  PenaltyThirty: 500
+  PenaltyForty: 750
+  PenaltyOver: 1000
