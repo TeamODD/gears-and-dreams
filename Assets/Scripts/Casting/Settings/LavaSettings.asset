@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681e41cdc67d1844eace7ffe9397356e, type: 3}
   m_Name: LavaSettings
   m_EditorClassIdentifier: 
-  HeightMultiplier: 0.005
+  HeightMultiplier: 0.01
   MaxHeight: 2

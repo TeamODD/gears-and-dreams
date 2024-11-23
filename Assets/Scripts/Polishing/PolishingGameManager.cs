@@ -43,17 +43,17 @@ namespace GearsAndDreams.Polishing
             _finalScore = settings.BaseScore;
 
             if (circleDetector.RotationCount >= 1 && circleDetector.RotationCount <= 19
-            || circleDetector.RotationCount >= 50 && circleDetector.RotationCount <= 59)
+            || circleDetector.RotationCount >= 50 && circleDetector.RotationCount <= 59) // 1-19, 50-59
             {
                 _finalScore -= settings.PenaltyFar;
             }
             else if (circleDetector.RotationCount >= 10 && circleDetector.RotationCount <= 19
-            || circleDetector.RotationCount >= 40 && circleDetector.RotationCount <= 49)
+            || circleDetector.RotationCount >= 40 && circleDetector.RotationCount <= 49) // 10-19, 40-49
             {
                 _finalScore -= settings.PenaltyMedium;
             }
-            else if (circleDetector.RotationCount >= 20 && circleDetector.RotationCount <= 29
-            || circleDetector.RotationCount >= 31 && circleDetector.RotationCount <= 39)
+            else if (circleDetector.RotationCount >= 20 && circleDetector.RotationCount <= 27
+            || circleDetector.RotationCount >= 33 && circleDetector.RotationCount <= 39) // 20-27, 33-39
             {
                 _finalScore -= settings.PenaltyNear;
             }
