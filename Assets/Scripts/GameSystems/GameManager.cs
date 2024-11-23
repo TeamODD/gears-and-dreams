@@ -24,7 +24,7 @@ namespace GearsAndDreams.GameSystems
         private int currentDay = 1;
         private int totalScore;
 
-        private void Awake()
+        private void Start()
         {
             gameScores = new Dictionary<GameType, int>();
             dailyTotalScores = new List<int>();

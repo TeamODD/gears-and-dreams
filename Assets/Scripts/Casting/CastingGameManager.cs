@@ -3,6 +3,7 @@ using System.Collections;
 using GearsAndDreams.Casting.Configuration;
 using GearsAndDreams.Casting.Enums;
 using GearsAndDreams.Casting.Interfaces;
+using GearsAndDreams.GameSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,16 @@ namespace GearsAndDreams.Casting
         private void Start()
         {
             CurrentState = GameState.Ready;
+            // SoundManager.Instance.Play("스테이지2");
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.Play("스테이지2");
+                Debug.Log("스테이지2 사운드 재생 시도");
+            }
+            else
+            {
+                Debug.LogWarning("SoundManager.Instance가 null입니다");
+            }
             targetLine.SetActive(false);
         }
 

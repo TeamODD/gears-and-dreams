@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using GearsAndDreams.Casting.Configuration;
 using GearsAndDreams.Casting.Interfaces;
+using GearsAndDreams.GameSystems;
 using UnityEngine;
 
 namespace GearsAndDreams.Casting
@@ -35,8 +36,8 @@ namespace GearsAndDreams.Casting
             if (settings == null) return;
 
             float newAngle = Mathf.Lerp(
-                settings.BaseRotationAngle, 
-                settings.BaseRotationAngle + settings.MaxRotationAngle, 
+                settings.BaseRotationAngle,
+                settings.BaseRotationAngle + settings.MaxRotationAngle,
                 value
             );
 
@@ -50,6 +51,8 @@ namespace GearsAndDreams.Casting
 
         private void AnimateBucketRotation()
         {
+            // SoundManager.Instance.Play("쇳물");
+
             transform.DORotate(
                 new Vector3(0f, 0f, BucketAngle),
                 settings.AnimationDuration

@@ -51,6 +51,30 @@ MonoBehaviour:
     volume: 0.5
     loop: 1
     source: {fileID: 0}
+  - name: "\uD0C0\uC774\uD2C0"
+    clip: {fileID: 8300000, guid: 7f44e6731c97cd347a793fdd4727c8db, type: 3}
+    soundType: 0
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: "\uC2A4\uD14C\uC774\uC9C02"
+    clip: {fileID: 8300000, guid: 5d15eec1882e72c4180fa96a86a4cfd7, type: 3}
+    soundType: 0
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: "\uD504\uB864\uB85C\uADF8"
+    clip: {fileID: 8300000, guid: b0b52cd5b39b9c941ae0753be1ea3532, type: 3}
+    soundType: 0
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: "\uC2A4\uD14C\uC774\uC9C03"
+    clip: {fileID: 8300000, guid: edb2eb18cba4b7446aec58cfeebdc754, type: 3}
+    soundType: 0
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
   - name: "\uBC84\uD2BC"
     clip: {fileID: 8300000, guid: f5cb71b243bb9a44f9f92f7f58799dee, type: 3}
     soundType: 1
@@ -63,27 +87,9 @@ MonoBehaviour:
     volume: 0.5
     loop: 0
     source: {fileID: 0}
-  - name: "\uD0C0\uC774\uD2C0"
-    clip: {fileID: 8300000, guid: 7f44e6731c97cd347a793fdd4727c8db, type: 3}
-    soundType: 0
-    volume: 0.5
-    loop: 1
-    source: {fileID: 0}
-  - name: "\uD504\uB864\uB85C\uADF8"
-    clip: {fileID: 8300000, guid: b0b52cd5b39b9c941ae0753be1ea3532, type: 3}
-    soundType: 0
-    volume: 0.5
-    loop: 1
-    source: {fileID: 0}
   - name: "\uC1F3\uBB3C"
     clip: {fileID: 8300000, guid: 131ee7f52a65cfd4c856f55f7ca0d5f2, type: 3}
     soundType: 1
     volume: 0.5
     loop: 0
-    source: {fileID: 0}
-  - name: "\uC2A4\uD14C\uC774\uC9C03"
-    clip: {fileID: 8300000, guid: edb2eb18cba4b7446aec58cfeebdc754, type: 3}
-    soundType: 0
-    volume: 0.5
-    loop: 1
     source: {fileID: 0}

@@ -35,7 +35,7 @@ namespace GearsAndDreams.GameSystems
         private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
 
 
-        private void Awake()
+        private void Start()
         {
             LoadSoundSettings();
 
