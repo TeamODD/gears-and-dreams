@@ -1,18 +1,17 @@
-using GearsAndDreams.Polishing;
 using UnityEngine;
 using DG.Tweening;
+using GearsAndDreams.Polishing.Configuration;
 
 namespace GearsAndDreams.Polishing
 {
     public class GearColorChanger : MonoBehaviour
     {
-        public CircleDetector circleDetector;
         private SpriteRenderer spriteRenderer;
         private int lastRotationCount = 0;
         private Color originalColor;
 
-        private const int FIRST_PHASE_MAX = 20;
-        private const int SECOND_PHASE_MAX = 60;
+        public CircleDetector circleDetector;
+        public PolishingGameSettings gameSettings;
 
         private void Awake()
         {
@@ -27,16 +26,16 @@ namespace GearsAndDreams.Polishing
                 lastRotationCount = circleDetector.RotationCount;
                 Color targetColor;
 
-                if (circleDetector.RotationCount <= FIRST_PHASE_MAX)
+                if (circleDetector.RotationCount <= gameSettings.PERFECT_COUNT)
                 {
                     // 0-20: 원래 색상에서 흰색으로
-                    float t = Mathf.Clamp01((float)circleDetector.RotationCount / FIRST_PHASE_MAX);
+                    float t = Mathf.Clamp01((float)circleDetector.RotationCount / gameSettings.PERFECT_COUNT);
                     targetColor = Color.Lerp(originalColor, Color.white, t);
                 }
-                else if (circleDetector.RotationCount <= SECOND_PHASE_MAX)
+                else if (circleDetector.RotationCount <= gameSettings.MAX_COUNT)
                 {
                     // 20-60: 흰색에서 회색으로
-                    float t = Mathf.Clamp01((float)(circleDetector.RotationCount - FIRST_PHASE_MAX) / (SECOND_PHASE_MAX - FIRST_PHASE_MAX));
+                    float t = Mathf.Clamp01((float)(circleDetector.RotationCount - gameSettings.PERFECT_COUNT) / (gameSettings.MAX_COUNT - gameSettings.PERFECT_COUNT));
                     targetColor = Color.Lerp(Color.white, Color.gray, t);
                 }
                 else

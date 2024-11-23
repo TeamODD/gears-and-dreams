@@ -1,3 +1,4 @@
+using GearsAndDreams.Polishing.Configuration;
 using UnityEngine;
 
 namespace GearsAndDreams.Polishing
@@ -5,6 +6,8 @@ namespace GearsAndDreams.Polishing
     public class CircleDetector : MonoBehaviour
     {
         public SpriteRenderer targetSpriteRenderer;
+        public PolishingGameSettings gameSettings;
+
 
         private CircleDrawing circleDrawing;
         private int rotationCount = 0;
@@ -15,7 +18,7 @@ namespace GearsAndDreams.Polishing
             get { return rotationCount; }
             set
             {
-                if (value < 0 || value > 60) return;
+                if (value < 0 || value > gameSettings.MAX_COUNT) return;
                 rotationCount = value;
             }
         }
@@ -51,6 +54,9 @@ namespace GearsAndDreams.Polishing
             }
         }
 
+        /// <summary>
+        /// 마우스 드래그를 시작할 때 호출되는 메서드입니다.
+        /// </summary>
         void StartDrawing()
         {
             if (!IsMouseOverTargetSprite()) return;
@@ -61,6 +67,9 @@ namespace GearsAndDreams.Polishing
             circleDrawing.AddPoint(firstPoint);
         }
 
+        /// <summary>
+        /// 마우스 드래그 중 지속적으로 호출되는 메서드입니다.
+        /// </summary>
         void UpdateDrawing()
         {
             if (!isDrawing || !IsMouseOverTargetSprite()) return;
@@ -71,8 +80,10 @@ namespace GearsAndDreams.Polishing
             {
                 circleDrawing.AddPoint(currentPoint);
 
+                // 완전한 회전이 감지되었는지 확인
                 if (circleDrawing.TryDetectFullRotation(currentPoint, out bool isRotationComplete))
                 {
+                    // 원의 중심이 월드 원점 내부에 있는지 확인
                     if (circleDrawing.IsWorldOriginInsideCircle())
                     {
                         RotationCount++;
@@ -82,12 +93,19 @@ namespace GearsAndDreams.Polishing
             }
         }
 
+        /// <summary>
+        /// 마우스 드래그가 끝났을 때 호출되는 메서드입니다.
+        /// </summary>
         void EndDrawing()
         {
             isDrawing = false;
             circleDrawing.Reset();
         }
 
+        /// <summary>
+        /// 마우스 커서가 대상 스프라이트 위에 있는지 확인하는 메서드입니다.
+        /// </summary>
+        /// <returns>마우스가 스프라이트 위에 있으면 true, 그렇지 않으면 false를 반환합니다.</returns>
         private bool IsMouseOverTargetSprite()
         {
             if (targetSpriteRenderer == null) return false;
@@ -101,6 +119,9 @@ namespace GearsAndDreams.Polishing
             return spriteBounds.Contains(mouseWorldPos);
         }
 
+        /// <summary>
+        /// GUI를 그리는 메서드입니다. 회전 횟수를 화면에 표시합니다.
+        /// </summary>
         void OnGUI()
         {
             GUI.Label(new Rect(10, 10, 600, 60), $"회전 횟수: {RotationCount}");
