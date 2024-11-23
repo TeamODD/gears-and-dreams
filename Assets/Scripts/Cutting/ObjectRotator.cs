@@ -14,15 +14,12 @@ namespace Assets.Scripts.Cutting
         {
             _object=gameObject;    
         }
-        private void Update()
+        public IEnumerator RotateObject()
         {
-            if(!_isRotating&&Input.GetKeyDown(KeyCode.Space))
+            if(_isRotating)
             {
-                StartCoroutine(rotateObject());
+                yield break;
             }
-        }
-        IEnumerator rotateObject()
-        {
             _isRotating=true;
             transform.DOLocalRotate(transform.eulerAngles+new Vector3(0,0, -45), _animationDuration);
             yield return new WaitForSeconds(_animationDuration);
