@@ -10,6 +10,17 @@ namespace GearsAndDreams.Polishing
         private int rotationCount = 0;
         private bool isDrawing = false;
 
+        public int RotationCount
+        {
+            get { return rotationCount; }
+            set
+            {
+                if (value < 0 || value > 60) return;
+                rotationCount = value;
+            }
+        }
+
+
         void Start()
         {
             circleDrawing = new CircleDrawing();
@@ -64,8 +75,8 @@ namespace GearsAndDreams.Polishing
                 {
                     if (circleDrawing.IsWorldOriginInsideCircle())
                     {
-                        rotationCount++;
-                        Debug.Log($"회전 횟수: {rotationCount}");
+                        RotationCount++;
+                        Debug.Log($"회전 횟수: {RotationCount}");
                     }
                 }
             }
@@ -92,7 +103,7 @@ namespace GearsAndDreams.Polishing
 
         void OnGUI()
         {
-            GUI.Label(new Rect(10, 10, 600, 60), $"회전 횟수: {rotationCount}");
+            GUI.Label(new Rect(10, 10, 600, 60), $"회전 횟수: {RotationCount}");
         }
     }
 }
