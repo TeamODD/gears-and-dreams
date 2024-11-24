@@ -1,5 +1,6 @@
 namespace Assets.Scripts.Cutting
 {
+    using DG.Tweening;
     using UnityEngine;
     using UnityEngine.Events;
 
@@ -9,6 +10,8 @@ namespace Assets.Scripts.Cutting
         private SpriteRenderer[] _insideGuideLines;
         private bool _isCutting=false;
         private ObjectRotator _objectRotator;
+        [SerializeField]
+        private GameObject _gearPanel;
         public int CuttingCount=8;
         private void Start()
         {
@@ -16,7 +19,7 @@ namespace Assets.Scripts.Cutting
         }
         void Update()
         {
-            if(CuttingCount<=0) return;
+            if(CuttingCount<=0 || _objectRotator._isRotating) return;
             if (Input.GetMouseButtonDown(0))
             {
                 _isCutting=true;
@@ -54,6 +57,8 @@ namespace Assets.Scripts.Cutting
                 if(CuttingCount<=0)
                 {
                     OnCompleteCutting.Invoke();
+                    _gearPanel.transform.DOMove(Vector3.zero, 1.5f);
+                    _gearPanel.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 1.5f);
                 }
             }
         }
