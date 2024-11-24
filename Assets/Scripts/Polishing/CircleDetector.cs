@@ -122,9 +122,9 @@ namespace GearsAndDreams.Polishing
         /// <summary>
         /// GUI를 그리는 메서드입니다. 회전 횟수를 화면에 표시합니다.
         /// </summary>
-        void OnGUI()
-        {
-            GUI.Label(new Rect(10, 10, 600, 60), $"회전 횟수: {RotationCount}");
-        }
+        // void OnGUI()
+        // {
+        //     GUI.Label(new Rect(10, 10, 600, 60), $"회전 횟수: {RotationCount}");
+        // }
     }
 }
