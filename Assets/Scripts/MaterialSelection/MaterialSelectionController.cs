@@ -5,6 +5,7 @@ namespace Assets.Scripts.MaterialSelection
     using System.Collections.Generic;
     using System.Linq;
     using DG.Tweening;
+    using GearsAndDreams.GameSystems;
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
@@ -109,7 +110,7 @@ namespace Assets.Scripts.MaterialSelection
                 int count=_collectedMaterial.CollectedMaterialCount.GetValueOrDefault(material, 0);
                 _score-=Mathf.Abs(_targetMaterialDictionary[material]-count)*200;
             }
-            print(_score);
+            GameManager.Instance.SetGameScore(GameManager.GameType.MaterialSelection, _score);
         }
         private void CompleteButtonSequence()
         {
