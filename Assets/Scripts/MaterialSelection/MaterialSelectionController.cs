@@ -63,6 +63,8 @@ namespace Assets.Scripts.MaterialSelection
                 _countDownText.text=i.ToString();
                 yield return new WaitForSeconds(1f);
             }
+            _countDownText.gameObject.SetActive(false);
+            yield return new WaitForSeconds(1f);
             Array.ForEach(_selectionSlots, selectionSlot=>
             {
                 selectionSlot.FadeDuration=_fadeDuration;
