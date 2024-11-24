@@ -9,13 +9,13 @@ namespace GearsAndDreams.Casting
         [SerializeField] private CastingGameManager castingGameManager;
         [SerializeField] private TextMeshProUGUI accuracyText;
         [SerializeField] private TextMeshProUGUI scoreText;
-        [SerializeField] private GameObject resultPanel;
+        // [SerializeField] private GameObject resultPanel;
 
         private void Start()
         {
             castingGameManager.OnScoreCalculated += HandleScoreCalculated;
             castingGameManager.OnGameStateChanged += HandleGameStateChanged;
-            HideResult();
+            // HideResult();
         }
 
         private void OnDestroy()
@@ -29,7 +29,7 @@ namespace GearsAndDreams.Casting
             string accuracyMessage = GetAccuracyMessage(accuracy);
             accuracyText.text = accuracyMessage;
             scoreText.text = $"Score: {score}";
-            ShowResult();
+            // ShowResult();
         }
 
         private string GetAccuracyMessage(AccuracyLevel accuracy)
@@ -49,18 +49,18 @@ namespace GearsAndDreams.Casting
         {
             if (newState == GameState.Ready)
             {
-                HideResult();
+                // HideResult();
             }
         }
 
-        private void ShowResult()
-        {
-            resultPanel.SetActive(true);
-        }
+        // private void ShowResult()
+        // {
+        //     resultPanel.SetActive(true);
+        // }
 
-        private void HideResult()
-        {
-            resultPanel.SetActive(false);
-        }
+        // private void HideResult()
+        // {
+        //     resultPanel.SetActive(false);
+        // }
     }
 }

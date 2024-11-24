@@ -6,6 +6,7 @@ using GearsAndDreams.Casting.Interfaces;
 using GearsAndDreams.GameSystems;
 using UnityEngine;
 using UnityEngine.UI;
+using static GearsAndDreams.GameSystems.GameManager;
 
 namespace GearsAndDreams.Casting
 {
@@ -26,7 +27,6 @@ namespace GearsAndDreams.Casting
         private void Start()
         {
             CurrentState = GameState.Ready;
-            // SoundManager.Instance.Play("스테이지2");
             if (SoundManager.Instance != null)
             {
                 SoundManager.Instance.Play("스테이지2");
@@ -122,6 +122,8 @@ namespace GearsAndDreams.Casting
             Debug.Log($"Difference: {difference:F2} ({percentageDiff * 100:F1}%)");
             Debug.Log($"Score: {score}");
 
+            GameManager.Instance.SetGameScore(GameType.Casting, score);
+
             OnScoreCalculated?.Invoke(accuracy, score);
 
             StartCoroutine(FinishGameRoutine());
@@ -134,6 +136,7 @@ namespace GearsAndDreams.Casting
             CurrentState = GameState.Finished;
             OnGameStateChanged?.Invoke(CurrentState);
             targetLine.SetActive(false);
+            GameManager.Instance.ChangeGame();
         }
     }
 }

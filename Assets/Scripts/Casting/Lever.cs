@@ -9,6 +9,8 @@ namespace GearsAndDreams.Casting
         private Scrollbar scrollbar;
         [SerializeField] private Bucket bucketComponent;
         [SerializeField] private Lava lavaComponent;
+        [SerializeField] private GameObject upLever;
+        [SerializeField] private GameObject downLever;
 
         private IBucketController _bucket;
         private ILavaController _lava;
@@ -16,9 +18,11 @@ namespace GearsAndDreams.Casting
         private void Awake()
         {
             scrollbar = GetComponent<Scrollbar>();
-            
+
+
             InitializeComponents();
             SetupEventListeners();
+            UpdateLeverState(0f);
         }
 
         private void InitializeComponents()
@@ -39,6 +43,26 @@ namespace GearsAndDreams.Casting
             if (scrollbar != null && _bucket != null)
             {
                 scrollbar.onValueChanged.AddListener(_bucket.UpdateTilt);
+                scrollbar.onValueChanged.AddListener(UpdateLeverState);
+            }
+        }
+
+        private void UpdateLeverState(float value)
+        {
+            if (value >= 0.99f)
+            {
+                upLever.SetActive(false);
+                downLever.SetActive(true);
+            }
+            else if (value <= 0.01f)
+            {
+                upLever.SetActive(true);
+                downLever.SetActive(false);
+            }
+            else
+            {
+                upLever.SetActive(false);
+                downLever.SetActive(false);
             }
         }
 
@@ -47,6 +71,7 @@ namespace GearsAndDreams.Casting
             if (scrollbar != null && _bucket != null)
             {
                 scrollbar.onValueChanged.RemoveListener(_bucket.UpdateTilt);
+                scrollbar.onValueChanged.RemoveListener(UpdateLeverState);
             }
         }
     }

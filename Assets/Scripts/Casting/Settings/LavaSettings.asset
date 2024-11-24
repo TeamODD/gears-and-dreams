@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: LavaSettings
   m_EditorClassIdentifier: 
   HeightMultiplier: 0.01
-  MaxHeight: 2
+  MaxHeight: 0.3
