@@ -21,6 +21,11 @@ namespace Assets.Scripts.Cutting
         }
         public void StartGame()
         {
+            StartCoroutine(StartGameButton());
+        }
+        private IEnumerator StartGameButton()
+        {
+            yield return new WaitForSeconds(0.25f);
             IsStarted=true;
         }
         void Update()

@@ -16,6 +16,7 @@ namespace GearsAndDreams.GameSystems
             Casting,
             Polishing,
             Cutting,
+            Receipt
         }
         private GameType _currentGameType;
         public GameType CurrentGameType
@@ -24,12 +25,16 @@ namespace GearsAndDreams.GameSystems
             set
             {
                 _currentGameType=value;
+                if(value==GameType.MaterialSelection)
+                {
+                    currentDay++;
+                }
                 SceneManager.LoadScene((int)value);
             }
         }
         public void ChangeGame()
         {
-            GameType nextGameType=(GameType)(int)_currentGameType+1%5;
+            GameType nextGameType=(GameType)((int)(_currentGameType+1)%6);
             if(nextGameType==0)
             {
                 nextGameType++;
@@ -42,7 +47,7 @@ namespace GearsAndDreams.GameSystems
 
         private Dictionary<GameType, int> gameScores;
         private List<int> dailyTotalScores;
-        private int currentDay = 1;
+        private int currentDay = 0;
         private int totalScore;
 
         private void Start()

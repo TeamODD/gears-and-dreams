@@ -1,3 +1,4 @@
+using GearsAndDreams.GameSystems;
 using GearsAndDreams.Polishing.Configuration;
 using TMPro;
 using UnityEngine;
@@ -38,7 +39,7 @@ namespace GearsAndDreams.Polishing
             timeText.text = ((int)_timeLimit).ToString();
         }
 
-        private void EvaluateScore()
+        public void EvaluateScore()
         {
             _finalScore = settings.BaseScore;
 
@@ -63,6 +64,7 @@ namespace GearsAndDreams.Polishing
             }
 
             Debug.Log($"Final Score: {_finalScore}");
+            GameManager.Instance.SetGameScore(GameManager.GameType.Polishing, _finalScore);
         }
     }
 }

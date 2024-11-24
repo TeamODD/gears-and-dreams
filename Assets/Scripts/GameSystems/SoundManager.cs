@@ -75,6 +75,14 @@ namespace GearsAndDreams.GameSystems
             }
         }
 
+        public void StopAllSound()
+        {
+            foreach(var sound in soundDictionary.Values)
+            {
+                sound.source.Stop();
+            }
+        }
+
         public void SetVolume(string soundName, float volume)
         {
             if (soundDictionary.TryGetValue(soundName, out Sound sound))

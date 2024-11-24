@@ -41,6 +41,7 @@ namespace Assets.Scripts.Cutting
         private void CreateMesh(List<Vector3> verticesList)
         {
             int length=verticesList.Count;
+            if(length<3) return;
             Vector3 centerPoint = (verticesList[length - 1] + verticesList[0]) / 2;
             verticesList.Add(centerPoint);
             for(int i=1;i<length-1;i++)

@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Cutting/CuttingGame.unity
     guid: a699291053ca949c59d6cff9218e13ba
+  - enabled: 1
+    path: Assets/Scenes/Receipt/Receipt.unity
+    guid: ad44cc7c0ebe7a44ba749de76ade1a75
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
