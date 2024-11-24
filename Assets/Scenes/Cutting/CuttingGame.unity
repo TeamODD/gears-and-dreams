@@ -484,6 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationDuration: 1
+  _isRotating: 0
 --- !u!1 &321071786
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1637,8 @@ MonoBehaviour:
   - {fileID: 1776086135}
   - {fileID: 1771388718}
   - {fileID: 1103815399}
+  _gearPanel: {fileID: 305454894}
+  CuttingCount: 8
   OnIncorrectMotion:
     m_PersistentCalls:
       m_Calls:

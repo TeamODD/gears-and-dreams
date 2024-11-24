@@ -9,7 +9,7 @@ namespace Assets.Scripts.Cutting
         [SerializeField]
         private float _animationDuration;
         private GameObject _object;
-        private bool _isRotating;
+        public bool _isRotating;
         private void Awake()
         {
             _object=gameObject;    

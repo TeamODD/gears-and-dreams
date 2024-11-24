@@ -11,13 +11,15 @@ namespace Assets.Scripts.Cutting
         GameObject _parentObject;
         List<Vector3> verticesList=new();
         private GearCuttingChecker _gearCuttingChecker;
+        private ObjectRotator _objectRotator;
         private void Start()
         {
             _gearCuttingChecker=FindAnyObjectByType<GearCuttingChecker>();
+            _objectRotator=FindAnyObjectByType<ObjectRotator>();
         }
         void Update()
         {
-            if(_gearCuttingChecker.CuttingCount<=0)
+            if(_gearCuttingChecker.CuttingCount<=0 || _objectRotator._isRotating)
             {
                 return;
             }
