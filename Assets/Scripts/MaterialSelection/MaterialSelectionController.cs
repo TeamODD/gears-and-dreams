@@ -15,6 +15,8 @@ namespace Assets.Scripts.MaterialSelection
         [SerializeField]
         private TMP_Text _countDownText;
         [SerializeField]
+        private Button _nextButton;
+        [SerializeField]
         private CollectedMaterial _collectedMaterial;
         [SerializeField]
         private TMP_Text _remainingCountText;
@@ -105,12 +107,17 @@ namespace Assets.Scripts.MaterialSelection
                 }
             }
 
+            yield return new WaitForSeconds(2f);
+
             foreach(Material material in _targetMaterialDictionary.Keys)
             {
                 int count=_collectedMaterial.CollectedMaterialCount.GetValueOrDefault(material, 0);
                 _score-=Mathf.Abs(_targetMaterialDictionary[material]-count)*200;
             }
-            GameManager.Instance.SetGameScore(GameManager.GameType.MaterialSelection, _score);
+
+            GameManager.Instance?.SetGameScore(GameManager.GameType.MaterialSelection, _score);
+
+            _nextButton.gameObject.SetActive(true);
         }
         private void CompleteButtonSequence()
         {
