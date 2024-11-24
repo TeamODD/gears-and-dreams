@@ -1,6 +1,7 @@
 namespace Assets.Scripts.MaterialSelection
 {
     using DG.Tweening;
+    using TMPro;
     using UnityEngine;
     using UnityEngine.Events;
     using UnityEngine.UI;
@@ -48,10 +49,10 @@ namespace Assets.Scripts.MaterialSelection
         }
         private void Start()
         {
-            _endPosition=GameObject.Find("End Position").GetComponent<RectTransform>().position;
         }
         private void OnClickButton()
         {
+            _endPosition=GameObject.Find("End Position").GetComponent<RectTransform>().position;
             FadeAnimationSequence.Complete();
             OnClickMaterial.Invoke(Material);
             GameObject lightObject=Instantiate(_materialLightPrafab, transform.root);
