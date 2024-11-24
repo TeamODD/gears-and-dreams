@@ -10,6 +10,9 @@ namespace GearsAndDreams.Casting
     public class Bucket : MonoBehaviour, IBucketController
     {
         [SerializeField] private BucketSettings settings;
+        [SerializeField] private GameObject LavaFallLarge;
+        [SerializeField] private GameObject LavaFallMedium;
+        [SerializeField] private GameObject LavaFallSmall;
 
         public float BaseRotationAngle => settings.BaseRotationAngle;
 
@@ -25,9 +28,41 @@ namespace GearsAndDreams.Casting
 
         private void Awake()
         {
+            LavaFallLarge.SetActive(false);
+            LavaFallMedium.SetActive(false);
+            LavaFallSmall.SetActive(false);
+
             if (settings == null)
             {
                 Debug.LogError("Bucket Settings이 없음");
+            }
+        }
+
+        private void Update()
+        {
+            if (BucketLocalRotationAngle <= 31f)
+            {
+                LavaFallLarge.SetActive(false);
+                LavaFallMedium.SetActive(false);
+                LavaFallSmall.SetActive(false);
+            }
+            else if (BucketLocalRotationAngle > 30f && BucketLocalRotationAngle <= 50f)
+            {
+                LavaFallLarge.SetActive(false);
+                LavaFallMedium.SetActive(false);
+                LavaFallSmall.SetActive(true);
+            }
+            else if (BucketLocalRotationAngle > 50f && BucketLocalRotationAngle <= 90f)
+            {
+                LavaFallLarge.SetActive(false);
+                LavaFallMedium.SetActive(true);
+                LavaFallSmall.SetActive(false);
+            }
+            else if (BucketLocalRotationAngle > 90f)
+            {
+                LavaFallLarge.SetActive(true);
+                LavaFallMedium.SetActive(false);
+                LavaFallSmall.SetActive(false);
             }
         }
 
