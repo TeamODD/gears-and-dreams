@@ -32,6 +32,7 @@ namespace Assets.Scripts.MaterialSelection
                 _button.interactable=true;
                 _canvasGroup.alpha=1f;
                 FadeAnimationSequence=DOTween.Sequence(gameObject);
+                FadeAnimationSequence.Append(_canvasGroup.DOFade(1f, 0.1f));
                 FadeAnimationSequence.Append(_canvasGroup.DOFade(0f, FadeDuration));
                 FadeAnimationSequence.OnComplete(()=>
                 {
