@@ -1,5 +1,6 @@
 namespace Assets.Scripts.Cutting
 {
+    using GearsAndDreams.GameSystems;
     using UnityEngine;
     using UnityEngine.Events;
 
@@ -14,6 +15,10 @@ namespace Assets.Scripts.Cutting
         {
             _score-=125;
             print("Reduced Socre! Current Score: "+_score);
+        }
+        public void SetScore()
+        {
+            GameManager.Instance?.SetGameScore(GameManager.GameType.Cutting, _score);
         }
     }
 }
