@@ -6,7 +6,7 @@ namespace Assets.Scripts.MaterialSelection
 
     public class MoveCanvas : MonoBehaviour
     {
-        private void Start()
+        public void MoveStart()
         {
             transform.DOMove(new Vector3(-0, 0, 0), 1.5f).SetEase(Ease.OutCubic);
         }

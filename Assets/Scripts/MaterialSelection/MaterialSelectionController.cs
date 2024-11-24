@@ -20,7 +20,7 @@ namespace Assets.Scripts.MaterialSelection
         private CollectedMaterial _collectedMaterial;
         [SerializeField]
         private TMP_Text _remainingCountText;
-        private Dictionary<Material, int> _targetMaterialDictionary;
+        public Dictionary<Material, int> _targetMaterialDictionary;
         private Dictionary<Material, int> _remainingMaterialDictionary;
         [SerializeField]
         private Material[] _materialPool;
