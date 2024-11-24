@@ -10,8 +10,17 @@ namespace Assets.Scripts.Cutting
         [SerializeField]
         GameObject _parentObject;
         List<Vector3> verticesList=new();
+        private GearCuttingChecker _gearCuttingChecker;
+        private void Start()
+        {
+            _gearCuttingChecker=FindAnyObjectByType<GearCuttingChecker>();
+        }
         void Update()
         {
+            if(_gearCuttingChecker.CuttingCount<=0)
+            {
+                return;
+            }
             if(Input.GetMouseButtonDown(0))
             {
                 verticesList=new();
@@ -30,6 +39,7 @@ namespace Assets.Scripts.Cutting
         private void CreateMesh(List<Vector3> verticesList)
         {
             int length=verticesList.Count;
+            verticesList.Add((verticesList[length-1]+verticesList[0])/2);
             for(int i=1;i<length-1;i++)
             {
                 verticesList.Add(ReflectPoint(verticesList[i], verticesList[0], verticesList[length-1]));
@@ -38,9 +48,9 @@ namespace Assets.Scripts.Cutting
             Mesh mesh = new Mesh();
 
             List<int> intsList=new();
-            for(int i=1;i<vertices.Length-1;i++)
+            for(int i=0;i<vertices.Length-1;i++)
             {
-                intsList.Add(0);
+                intsList.Add(length);
                 intsList.Add(i);
                 intsList.Add(i+1);
             }

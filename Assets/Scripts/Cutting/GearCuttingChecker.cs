@@ -9,12 +9,14 @@ namespace Assets.Scripts.Cutting
         private SpriteRenderer[] _insideGuideLines;
         private bool _isCutting=false;
         private ObjectRotator _objectRotator;
+        public int CuttingCount=8;
         private void Start()
         {
             _objectRotator=FindAnyObjectByType<ObjectRotator>();
         }
         void Update()
         {
+            if(CuttingCount<=0) return;
             if (Input.GetMouseButtonDown(0))
             {
                 _isCutting=true;
@@ -48,9 +50,16 @@ namespace Assets.Scripts.Cutting
             {
                 StartCoroutine(_objectRotator.RotateObject());
                 _isCutting=false;
+                CuttingCount--;
+                if(CuttingCount<=0)
+                {
+                    OnCompleteCutting.Invoke();
+                }
             }
         }
         [field:SerializeField]
         private UnityEvent OnIncorrectMotion;
+        [field:SerializeField]
+        private UnityEvent OnCompleteCutting;
     }
 }
