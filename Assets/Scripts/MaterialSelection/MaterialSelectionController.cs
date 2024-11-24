@@ -12,6 +12,8 @@ namespace Assets.Scripts.MaterialSelection
     public class MaterialSelectionController : MonoBehaviour
     {
         [SerializeField]
+        private TMP_Text _countDownText;
+        [SerializeField]
         private CollectedMaterial _collectedMaterial;
         [SerializeField]
         private TMP_Text _remainingCountText;
@@ -50,12 +52,17 @@ namespace Assets.Scripts.MaterialSelection
                 print(_materialPool[index].name);
             }
         }
-        private void Start()
+        public void StartGame()
         {
             StartCoroutine(ActivateMaterialSelectionMode());
         }
         public IEnumerator ActivateMaterialSelectionMode()
         {
+            for(int i=3;i>0;i--)
+            {
+                _countDownText.text=i.ToString();
+                yield return new WaitForSeconds(1f);
+            }
             Array.ForEach(_selectionSlots, selectionSlot=>
             {
                 selectionSlot.FadeDuration=_fadeDuration;
