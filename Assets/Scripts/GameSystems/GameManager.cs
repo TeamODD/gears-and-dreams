@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GearsAndDreams.Casting;
 using GearsAndDreams.Polishing;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GearsAndDreams.GameSystems
 {
@@ -10,10 +11,30 @@ namespace GearsAndDreams.GameSystems
     {
         public enum GameType
         {
-            Casting,
+            Start,
             MaterialSelection,
+            Casting,
             Polishing,
-            // 새로운 게임 추가 시 여기에 열거형 멤버 추가
+            Cutting,
+        }
+        private GameType _currentGameType;
+        public GameType CurrentGameType
+        {
+            get=>_currentGameType;
+            set
+            {
+                _currentGameType=value;
+                SceneManager.LoadScene((int)value);
+            }
+        }
+        public void ChangeGame()
+        {
+            GameType nextGameType=(GameType)(int)_currentGameType+1%5;
+            if(nextGameType==0)
+            {
+                nextGameType++;
+            }
+            CurrentGameType=nextGameType;
         }
 
         public int CurrentDay => currentDay;
@@ -95,6 +116,7 @@ namespace GearsAndDreams.GameSystems
             totalScore = 0;
             dailyTotalScores.Clear();
             ResetDailyScores();
+            CurrentGameType=GameType.Start;
         }
     }
 }
