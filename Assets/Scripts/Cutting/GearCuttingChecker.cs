@@ -14,13 +14,18 @@ namespace Assets.Scripts.Cutting
         [SerializeField]
         private GameObject _gearPanel;
         public int CuttingCount=8;
+        public bool IsStarted=false;
         private void Start()
         {
             _objectRotator=FindAnyObjectByType<ObjectRotator>();
         }
+        public void StartGame()
+        {
+            IsStarted=true;
+        }
         void Update()
         {
-            if(CuttingCount<=0 || _objectRotator._isRotating) return;
+            if(CuttingCount<=0 || _objectRotator._isRotating || !IsStarted) return;
             if (Input.GetMouseButtonDown(0))
             {
                 _isCutting=true;
@@ -69,7 +74,7 @@ namespace Assets.Scripts.Cutting
             float elapsedTime=0f;
             while(true)
             {
-                _gearPanel.transform.eulerAngles+=new Vector3(0,0,elapsedTime/60);
+                _gearPanel.transform.eulerAngles+=new Vector3(0,0,elapsedTime/90);
                 yield return null;
                 elapsedTime+=Time.deltaTime;
             }
