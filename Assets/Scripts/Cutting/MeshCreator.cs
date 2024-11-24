@@ -19,7 +19,7 @@ namespace Assets.Scripts.Cutting
         }
         void Update()
         {
-            if(_gearCuttingChecker.CuttingCount<=0 || _objectRotator._isRotating)
+            if(_gearCuttingChecker.CuttingCount<=0 || !_gearCuttingChecker.IsStarted || _objectRotator._isRotating)
             {
                 return;
             }
@@ -41,20 +41,21 @@ namespace Assets.Scripts.Cutting
         private void CreateMesh(List<Vector3> verticesList)
         {
             int length=verticesList.Count;
-            verticesList.Add((verticesList[length-1]+verticesList[0])/2);
+            Vector3 centerPoint = (verticesList[length - 1] + verticesList[0]) / 2;
+            verticesList.Add(centerPoint);
             for(int i=1;i<length-1;i++)
             {
-                verticesList.Add(ReflectPoint(verticesList[i], verticesList[0], verticesList[length-1]));
+                verticesList.Add(ReflectPoint(verticesList[i], verticesList[length-1], verticesList[0]));
             }
             Vector3[] vertices= verticesList.ToArray();
             Mesh mesh = new Mesh();
 
             List<int> intsList=new();
-            for(int i=0;i<vertices.Length-1;i++)
+            for(int i=0;i<vertices.Length;i++)
             {
                 intsList.Add(length);
                 intsList.Add(i);
-                intsList.Add(i+1);
+                intsList.Add((i+1)%vertices.Length);
             }
             int[] triangles = intsList.ToArray();
 
