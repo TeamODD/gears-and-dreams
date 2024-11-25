@@ -86,7 +86,7 @@ namespace GearsAndDreams.Casting
 
         private void AnimateBucketRotation()
         {
-            // SoundManager.Instance.Play("쇳물");
+            SoundManager.Instance.Play("쇳물");
 
             transform.DORotate(
                 new Vector3(0f, 0f, BucketAngle),

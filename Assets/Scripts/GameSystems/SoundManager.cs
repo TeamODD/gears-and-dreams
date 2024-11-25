@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace GearsAndDreams.GameSystems
 {
@@ -29,15 +30,16 @@ namespace GearsAndDreams.GameSystems
 
         private const string BGM_KEY = "BGMVolume";
         private const string SFX_KEY = "SFXVolume";
+        private const float FADE_DURATION = 1f;  // 페이드 효과 지속 시간
 
         [Header("사운드 세팅")]
         public Sound[] sounds;
         private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
 
-
         private void Start()
         {
             LoadSoundSettings();
+            Debug.Log("SoundManager Start - Loading sounds");
 
             foreach (Sound sound in sounds)
             {
@@ -50,20 +52,38 @@ namespace GearsAndDreams.GameSystems
                 sound.source.loop = sound.loop;
 
                 UpdateSoundVolume(sound);
-
                 soundDictionary.Add(sound.name, sound);
+                Debug.Log($"Added sound: {sound.name}, Type: {sound.soundType}, Volume: {sound.volume}");
             }
         }
 
         public void Play(string soundName)
         {
+            Debug.Log($"Attempting to play sound: {soundName}");
             if (soundDictionary.TryGetValue(soundName, out Sound sound))
             {
+                if (sound.clip == null)
+                {
+                    Debug.LogError($"Audio clip is missing for sound: {soundName}");
+                    return;
+                }
+
+                float targetVolume = sound.volume * (sound.soundType == SoundType.BGM ? bgmMasterVolume : sfxMasterVolume);
+                sound.source.volume = 0f;
                 sound.source.Play();
+                Debug.Log($"Playing sound: {soundName}, Target Volume: {targetVolume}");
+
+                // Kill any existing tweens on this AudioSource
+                DOTween.Kill(sound.source);
+
+                // 페이드 인 효과
+                sound.source.DOFade(targetVolume, FADE_DURATION)
+                    .SetEase(Ease.Linear)
+                    .OnComplete(() => Debug.Log($"Fade in complete for: {soundName}"));
             }
             else
             {
-                Debug.LogWarning($"Sound not found: {soundName}");
+                Debug.LogWarning($"Sound not found in dictionary: {soundName}");
             }
         }
 
@@ -71,13 +91,25 @@ namespace GearsAndDreams.GameSystems
         {
             if (soundDictionary.TryGetValue(soundName, out Sound sound))
             {
-                sound.source.Stop();
+                if (sound.source.isPlaying)
+                {
+                    // Kill any existing tweens on this AudioSource
+                    DOTween.Kill(sound.source);
+
+                    // 페이드 아웃 효과
+                    sound.source.DOFade(0f, FADE_DURATION)
+                        .SetEase(Ease.Linear)
+                        .OnComplete(() => {
+                            sound.source.Stop();
+                            Debug.Log($"Stopped sound: {soundName}");
+                        });
+                }
             }
         }
 
         public void StopAllSound()
         {
-            foreach(var sound in soundDictionary.Values)
+            foreach (var sound in soundDictionary.Values)
             {
                 sound.source.Stop();
             }
@@ -147,11 +179,21 @@ namespace GearsAndDreams.GameSystems
 
         public void StopAllSoundsOfType(SoundType soundType)
         {
+            Debug.Log($"Stopping all sounds of type: {soundType}");
             foreach (var sound in soundDictionary.Values)
             {
-                if (sound.soundType == soundType)
+                if (sound.soundType == soundType && sound.source.isPlaying)
                 {
-                    sound.source.Stop();
+                    // Kill any existing tweens on this AudioSource
+                    DOTween.Kill(sound.source);
+
+                    // 페이드 아웃 효과
+                    sound.source.DOFade(0f, FADE_DURATION)
+                        .SetEase(Ease.Linear)
+                        .OnComplete(() => {
+                            sound.source.Stop();
+                            Debug.Log($"Fade out complete for: {sound.name}");
+                        });
                 }
             }
         }
