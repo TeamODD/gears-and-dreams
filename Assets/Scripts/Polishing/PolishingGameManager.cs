@@ -10,26 +10,44 @@ namespace GearsAndDreams.Polishing
         public PolishingGameSettings settings;
         public CircleDetector circleDetector;
         public TMP_Text timeText;
+        public GameObject startButton;
+        public GameObject nextButton;
 
         public float FinalScore => _finalScore;
 
         private float _timeLimit = PolishingGameSettings.TimeLimit;
         private int _finalScore;
         private bool _isGameOver = false;
+        private bool _isGameStarted = false;
+
+        private void Start()
+        {
+            timeText.text = ((int)_timeLimit).ToString();
+            _isGameStarted = false;
+        }
 
         private void Update()
         {
-            if (!_isGameOver)
+            if (!_isGameStarted || _isGameOver) return;
+
+            if (_timeLimit > 0)
             {
-                if (_timeLimit > 0)
-                {
-                    Timer();
-                }
-                else
-                {
-                    EvaluateScore();
-                    _isGameOver = true;
-                }
+                Timer();
+            }
+            else
+            {
+                EvaluateScore();
+                _isGameOver = true;
+                nextButton.SetActive(true);
+            }
+        }
+
+        public void StartGame()
+        {
+            _isGameStarted = true;
+            if (startButton != null)
+            {
+                startButton.SetActive(false);
             }
         }
 
